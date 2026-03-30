@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Smart Waste Management - Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-low": "#f2f4f6",
+            "surface-dim": "#d8dadc",
+            "primary-fixed-dim": "#a3c9ff",
+            "surface-bright": "#f7f9fb",
+            "inverse-surface": "#2d3133",
+            "on-secondary-container": "#fefcff",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#e0e3e5",
+            "tertiary": "#612aca",
+            "on-primary-fixed-variant": "#004883",
+            "on-tertiary-container": "#f2e8ff",
+            "on-error": "#ffffff",
+            "surface-container": "#eceef0",
+            "outline": "#717783",
+            "inverse-on-surface": "#eff1f3",
+            "surface-container-highest": "#e0e3e5",
+            "on-background": "#191c1e",
+            "surface": "#f7f9fb",
+            "primary-container": "#0f6cbd",
+            "secondary-fixed": "#d8e2ff",
+            "tertiary-fixed-dim": "#d0bcff",
+            "tertiary-container": "#7a49e4",
+            "on-tertiary-fixed-variant": "#5516be",
+            "on-secondary": "#ffffff",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#23005c",
+            "surface-tint": "#0060ab",
+            "inverse-primary": "#a3c9ff",
+            "on-surface-variant": "#414751",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#004395",
+            "secondary-container": "#2170e4",
+            "on-secondary-fixed": "#001a42",
+            "background": "#f7f9fb",
+            "outline-variant": "#c1c7d3",
+            "primary-fixed": "#d3e3ff",
+            "on-primary-container": "#e3ecff",
+            "on-primary": "#ffffff",
+            "tertiary-fixed": "#e9ddff",
+            "surface-container-high": "#e6e8ea",
+            "secondary-fixed-dim": "#adc6ff",
+            "primary": "#005396",
+            "on-surface": "#191c1e",
+            "secondary": "#0058be",
+            "on-primary-fixed": "#001c39",
+            "waste-organic": "#16A34A",
+            "waste-paper": "#F59E0B",
+            "waste-metal": "#3B82F6",
+            "waste-plastic": "#8B5CF6"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Manrope', sans-serif;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(193, 199, 211, 0.15);
+    }
+
+    .tonal-shift {
+      background: linear-gradient(135deg, #f7f9fb 0%, #f2f4f6 100%);
+    }
+
+    .primary-gradient {
+      background: linear-gradient(135deg, #005396 0%, #0f6cbd 100%);
+    }
+  </style>
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen">
+
+  <!-- TopNavBar -->
+  <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm px-8 h-16 flex justify-between items-center">
+    <div class="flex items-center gap-6">
+        <span class="text-xl font-bold tracking-tight text-blue-900 font-headline">Trashure</span>
+        <nav class="hidden md:flex gap-8 items-center border-l border-slate-200 pl-8">
+            <a class="text-slate-600 hover:text-blue-900 text-xs font-bold uppercase tracking-widest transition-all" href="index.html">Dashboard</a>
+            <a class="text-slate-600 hover:text-blue-900 text-xs font-bold uppercase tracking-widest transition-all" href="monitor.html">Waste Map</a>
+            <a class="text-slate-600 hover:text-blue-900 text-xs font-bold uppercase tracking-widest transition-all" href="route.html">Optimizer</a>
+            <a class="text-slate-600 hover:text-blue-900 text-xs font-bold uppercase tracking-widest transition-all" href="detail.html">Hardware</a>
+        </nav>
+    </div>
+    <div class="flex items-center gap-4">
+        <span class="material-symbols-outlined text-slate-400">notifications</span>
+        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+            <span class="material-symbols-outlined text-blue-600 text-lg">account_circle</span>
+        </div>
+    </div>
+</header>
+  <!-- SideNavBar -->
+  <aside class="fixed left-0 top-0 h-full w-64 z-40 bg-slate-50/80 backdrop-blur-xl shadow-2xl shadow-blue-900/10 flex flex-col p-4 gap-2 pt-20 transition-all">
+    <div class="px-4 mb-6">
+        <h2 class="font-bold text-blue-900 font-headline text-lg">Trashure</h2>
+        <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Admin Control</p>
+    </div>
+    <nav class="flex flex-col gap-1">
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-blue-600 hover:bg-white/50 rounded-lg transition-all" href="index.html">
+            <span class="material-symbols-outlined text-xl">dashboard</span>
+            <span class="font-manrope text-sm font-semibold">Dashboard</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-blue-600 hover:bg-white/50 rounded-lg transition-all" href="monitor.html">
+            <span class="material-symbols-outlined text-xl">map</span>
+            <span class="font-manrope text-sm font-semibold">Waste Map</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-blue-600 hover:bg-white/50 rounded-lg transition-all" href="route.html">
+            <span class="material-symbols-outlined text-xl">directions_car</span>
+            <span class="font-manrope text-sm font-semibold">Route Optimizer</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-blue-600 hover:bg-white/50 rounded-lg transition-all" href="detail.html">
+            <span class="material-symbols-outlined text-xl">analytics</span>
+            <span class="font-manrope text-sm font-semibold">Hardware Diagnostic</span>
+        </a>
+    </nav>
+</aside>
+  <!-- Main Content Canvas -->
+  <main class="lg:pl-64 pt-20 pb-12 px-8 min-h-screen transition-all">
+    <!-- Hero/Subheader -->
+    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-primary mb-1">Overview</p>
+        <h1 class="text-4xl font-extrabold text-blue-900 tracking-tight">Municipal Waste Intelligence Dashboard</h1>
+      </div>
+      <div
+        class="flex items-center gap-3 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full border border-outline-variant/20">
+        <span class="flex h-2 w-2 relative">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+        <span class="text-xs font-semibold text-slate-600">Live • Last updated: just now</span>
+      </div>
+    </div>
+    <!-- KPI Cards Row -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="glass-card p-6 rounded-2xl shadow-sm">
+        <div class="flex justify-between items-start mb-4">
+          <div class="p-2 bg-blue-50 rounded-lg">
+            <span class="material-symbols-outlined text-primary">delete</span>
+          </div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Inventory</span>
+        </div>
+        <p class="text-3xl font-black text-blue-900">247</p>
+        <p class="text-sm font-medium text-slate-500">Total Bins</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl shadow-sm">
+        <div class="flex justify-between items-start mb-4">
+          <div class="p-2 bg-green-50 rounded-lg">
+            <span class="material-symbols-outlined text-waste-organic">signal_cellular_alt</span>
+          </div>
+          <div class="flex items-center text-waste-organic gap-0.5">
+            <span class="material-symbols-outlined text-xs">trending_up</span>
+            <span class="text-[10px] font-bold">4%</span>
+          </div>
+        </div>
+        <p id="avg-fill-kpi" class="text-3xl font-black text-blue-900">54%</p>
+        <p class="text-sm font-medium text-slate-500">Avg Fill Level</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl shadow-sm">
+        <div class="flex justify-between items-start mb-4">
+          <div class="p-2 bg-blue-50 rounded-lg">
+            <span class="material-symbols-outlined text-primary">local_shipping</span>
+          </div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Fleet</span>
+        </div>
+        <p class="text-3xl font-black text-blue-900">12</p>
+        <p class="text-sm font-medium text-slate-500">Active Trucks</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl shadow-sm border-l-4 border-l-error/30">
+        <div class="flex justify-between items-start mb-4">
+          <div class="p-2 bg-error-container/30 rounded-lg">
+            <span class="material-symbols-outlined text-error">warning</span>
+          </div>
+          <span class="text-[10px] font-bold text-error uppercase tracking-tighter">Priority</span>
+        </div>
+        <p id="active-alerts-kpi" class="text-3xl font-black text-error">08</p>
+        <p class="text-sm font-medium text-slate-500">Active Alerts</p>
+      </div>
+    </div>
+    <!-- Middle Section: Map and Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-10 gap-8 mb-8">
+      <!-- Map Placeholder -->
+      <div class="lg:col-span-6 h-[500px] rounded-3xl overflow-hidden relative shadow-2xl shadow-blue-900/5 group">
+        <img alt="District Map" class="w-full h-full object-cover"
+          data-alt="Modern high-resolution satellite map view of an urban city district with detailed streets and park areas in soft clean daylight"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG6_HtkGMKkdNCoTvdOJL_ktsjT9jU6hpgScpyvd8xYiCHjBvjhJRLDq4vi60DvY1xmdvD4wTKI8dY768ct9q2sqjF-j6H4MZD4WHnVpVo5xOsdzyH0htZua7hDKKqHPMIVrZ06kHzwWozdpdvxoW-kBYRoa-DZlvGtRDceZCO1brtlRVjdWqqMDvZdCmdYkgbWtWhicB6ECGgRnoQ0qixHHNzEzoMTGKrQsPW5uQtI2XSXeFSTaZNu2hBr81jAPsYnNzpKFcP-pyK" />
+        <!-- Map Controls Overlay -->
+        <div class="absolute top-6 right-6 flex flex-col gap-2">
+          <div class="glass-card p-1 rounded-xl flex flex-col">
+            <button class="p-2 hover:bg-white rounded-lg transition-colors"><span
+                class="material-symbols-outlined text-sm">add</span></button>
+            <button class="p-2 hover:bg-white rounded-lg transition-colors"><span
+                class="material-symbols-outlined text-sm">remove</span></button>
+          </div>
+          <button class="glass-card p-2 rounded-xl hover:bg-white transition-colors">
+            <span class="material-symbols-outlined text-sm">layers</span>
+          </button>
+        </div>
+        <!-- Bins Overlay (Simulated) -->
+        <div class="absolute inset-0 pointer-events-none">
+          <div class="absolute top-1/3 left-1/4 w-3 h-3 bg-waste-organic rounded-full border-2 border-white shadow-lg">
+          </div>
+          <div class="absolute top-1/2 left-1/2 w-3 h-3 bg-error rounded-full border-2 border-white shadow-lg"></div>
+          <div
+            class="absolute bottom-1/4 right-1/3 w-3 h-3 bg-waste-paper rounded-full border-2 border-white shadow-lg">
+          </div>
+          <div class="absolute top-1/4 right-1/4 w-3 h-3 bg-waste-organic rounded-full border-2 border-white shadow-lg">
+          </div>
+        </div>
+        <div class="absolute bottom-6 left-6 glass-card px-4 py-2 rounded-full">
+          <p class="text-[10px] font-bold text-slate-500 uppercase">Current View</p>
+          <p class="text-xs font-bold text-blue-900">District 01 • Central Sector</p>
+        </div>
+      </div>
+      <!-- Right Column Charts -->
+      <div class="lg:col-span-4 flex flex-col gap-8">
+        <!-- Composition Chart -->
+        <div class="glass-card p-8 rounded-3xl flex-1 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-900 mb-6">Waste Composition</h3>
+          <div class="flex items-center gap-8">
+            <div class="relative w-32 h-32 flex items-center justify-center">
+              <svg class="w-full h-full rotate-[-90deg]" viewbox="0 0 36 36">
+                <circle class="stroke-slate-100" cx="18" cy="18" fill="none" r="16" stroke-width="4"></circle>
+                <circle class="stroke-waste-organic" cx="18" cy="18" fill="none" r="16" stroke-dasharray="40 100"
+                  stroke-linecap="round" stroke-width="4"></circle>
+                <circle class="stroke-waste-plastic" cx="18" cy="18" fill="none" r="16" stroke-dasharray="25 100"
+                  stroke-dashoffset="-40" stroke-linecap="round" stroke-width="4"></circle>
+                <circle class="stroke-waste-paper" cx="18" cy="18" fill="none" r="16" stroke-dasharray="20 100"
+                  stroke-dashoffset="-65" stroke-linecap="round" stroke-width="4"></circle>
+                <circle class="stroke-error" cx="18" cy="18" fill="none" r="16" stroke-dasharray="15 100"
+                  stroke-dashoffset="-85" stroke-linecap="round" stroke-width="4"></circle>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span class="text-xl font-black text-blue-900">2.4t</span>
+                <span class="text-[8px] font-bold text-slate-400 uppercase">Daily</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 flex-1">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-waste-organic"></span>
+                  <span class="text-xs font-medium text-slate-600">Organic</span>
+                </div>
+                <span class="text-xs font-bold text-blue-900">40%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-waste-plastic"></span>
+                  <span class="text-xs font-medium text-slate-600">Plastic</span>
+                </div>
+                <span id="bin1-plastic" class="text-xs font-bold text-blue-900">25%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-waste-paper"></span>
+                  <span class="text-xs font-medium text-slate-600">Paper</span>
+                </div>
+                <span id="bin1-paper" class="text-xs font-bold text-blue-900">20%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-error"></span>
+                  <span class="text-xs font-medium text-slate-600">Critical</span>
+                </div>
+                <span class="text-xs font-bold text-blue-900">15%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fill Level Trend -->
+        <div class="glass-card p-8 rounded-3xl flex-1 shadow-sm">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-lg font-bold text-blue-900">Fill Level Trend</h3>
+            <span class="text-[10px] font-bold px-2 py-1 bg-blue-50 text-blue-700 rounded-md">Weekly</span>
+          </div>
+          <div class="h-32 flex items-end gap-2 px-2">
+            <div class="flex-1 bg-primary/10 hover:bg-primary/30 transition-colors rounded-t-lg h-[40%]"></div>
+            <div class="flex-1 bg-primary/10 hover:bg-primary/30 transition-colors rounded-t-lg h-[65%]"></div>
+            <div class="flex-1 bg-primary/10 hover:bg-primary/30 transition-colors rounded-t-lg h-[55%]"></div>
+            <div class="flex-1 bg-primary/10 hover:bg-primary/30 transition-colors rounded-t-lg h-[85%]"></div>
+            <div class="flex-1 bg-primary/10 hover:bg-primary/30 transition-colors rounded-t-lg h-[70%]"></div>
+            <div class="flex-1 bg-primary/40 rounded-t-lg h-[90%] ring-4 ring-primary/5"></div>
+            <div class="flex-1 bg-primary/10 hover:bg-primary/30 transition-colors rounded-t-lg h-[45%]"></div>
+          </div>
+          <div class="flex justify-between mt-3 px-2">
+            <span class="text-[10px] font-bold text-slate-400">MON</span>
+            <span class="text-[10px] font-bold text-slate-400">WED</span>
+            <span class="text-[10px] font-bold text-slate-400">FRI</span>
+            <span class="text-[10px] font-bold text-slate-400">SUN</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom Section: Data Table -->
+    <section class="glass-card rounded-3xl overflow-hidden shadow-sm">
+      <div class="px-8 py-6 border-b border-outline-variant/10 flex justify-between items-center">
+        <h3 class="text-lg font-bold text-blue-900">Zone Performance</h3>
+        <button class="text-sm font-bold text-primary hover:underline">View All Zones</button>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="bg-surface-container-low">
+              <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-wider">Zone Name</th>
+              <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-wider">Total Bins</th>
+              <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-wider">Avg Fill</th>
+              <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-wider">Collection Rate</th>
+              <th class="px-8 py-4 text-[10px] font-black uppercase text-slate-500 tracking-wider">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/5">
+            <tr class="hover:bg-blue-50/20 transition-colors group">
+              <td class="px-8 py-5">
+                <div class="flex flex-col">
+                  <span class="text-sm font-bold text-blue-900">Central Business District</span>
+                  <span class="text-[10px] text-slate-400">Sector 1-12</span>
+                </div>
+              </td>
+              <td class="px-8 py-5 text-sm font-semibold text-slate-600">84</td>
+              <td class="px-8 py-5">
+                <div class="flex items-center gap-3">
+                  <div class="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-waste-organic w-[45%]"></div>
+                  </div>
+                  <span class="text-sm font-bold text-blue-900">45%</span>
+                </div>
+              </td>
+              <td class="px-8 py-5 text-sm font-bold text-slate-600">98.2%</td>
+              <td class="px-8 py-5">
+                <span
+                  class="px-3 py-1 rounded-full text-[10px] font-bold bg-green-100 text-waste-organic uppercase">Optimal</span>
+              </td>
+            </tr>
+            <tr class="bg-surface-container-low/30 hover:bg-blue-50/20 transition-colors group">
+              <td class="px-8 py-5">
+                <div class="flex flex-col">
+                  <span class="text-sm font-bold text-blue-900">North Industrial Park</span>
+                  <span class="text-[10px] text-slate-400">Sector 44</span>
+                </div>
+              </td>
+              <td class="px-8 py-5 text-sm font-semibold text-slate-600">32</td>
+              <td class="px-8 py-5">
+                <div class="flex items-center gap-3">
+                  <div class="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-waste-paper w-[78%]"></div>
+                  </div>
+                  <span class="text-sm font-bold text-blue-900">78%</span>
+                </div>
+              </td>
+              <td class="px-8 py-5 text-sm font-bold text-slate-600">82.1%</td>
+              <td class="px-8 py-5">
+                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-waste-paper uppercase">High
+                  Load</span>
+              </td>
+            </tr>
+            <tr class="hover:bg-blue-50/20 transition-colors group">
+              <td class="px-8 py-5">
+                <div class="flex flex-col">
+                  <span class="text-sm font-bold text-blue-900">Riverside Residential</span>
+                  <span class="text-[10px] text-slate-400">Sector 21-A</span>
+                </div>
+              </td>
+              <td class="px-8 py-5 text-sm font-semibold text-slate-600">56</td>
+              <td class="px-8 py-5">
+                <div class="flex items-center gap-3">
+                  <div class="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-error w-[92%]"></div>
+                  </div>
+                  <span class="text-sm font-bold text-blue-900">92%</span>
+                </div>
+              </td>
+              <td class="px-8 py-5 text-sm font-bold text-slate-600">64.5%</td>
+              <td class="px-8 py-5">
+                <span
+                  class="px-3 py-1 rounded-full text-[10px] font-bold bg-error-container text-error uppercase">Action
+                  Required</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Fetch data from the FastAPI backend every 2 seconds
+    async function refreshOverviewDashboard() {
+      try {
+        const response = await fetch('/bins');
+        const data = await response.json();
+        
+        // 1. Calculate Average Fill across ALL bins
+        const binArray = Object.values(data);
+        if (binArray.length > 0) {
+          const fills = binArray.map(b => b.fill);
+          const avg = fills.reduce((a, b) => a + b, 0) / fills.length;
+          
+          // Safely update the Average Fill UI
+          const avgEl = document.getElementById('avg-fill-kpi');
+          if (avgEl) avgEl.textContent = avg.toFixed(0) + '%';
+          
+          // 2. Dynamically calculate Critical Alerts (Bins > 85% full)
+          const criticalCount = binArray.filter(b => b.fill >= 85).length;
+          const alertsEl = document.getElementById('active-alerts-kpi');
+          
+          if (alertsEl) {
+             // Format it to always show two digits (e.g., "02")
+            alertsEl.textContent = criticalCount < 10 ? '0' + criticalCount : criticalCount;
+          }
+        }
+      } catch (error) {
+        console.error("Overview Dashboard Sync Failed:", error);
+      }
+    }
+
+    // Run immediately on load, then every 2 seconds
+    refreshOverviewDashboard();
+    setInterval(refreshOverviewDashboard, 2000);
+  </script>
+</body>
+
+</html>

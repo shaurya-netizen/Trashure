@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Waste Management &gt; Alerts Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "tertiary-fixed": "#e9ddff",
+                        "outline-variant": "#c1c7d3",
+                        "on-background": "#191c1e",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#0060ab",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001c39",
+                        "on-primary-fixed-variant": "#004883",
+                        "inverse-primary": "#a3c9ff",
+                        "secondary-fixed": "#d8e2ff",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-low": "#f2f4f6",
+                        "on-surface-variant": "#414751",
+                        "on-tertiary-container": "#f2e8ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface": "#191c1e",
+                        "secondary-container": "#2170e4",
+                        "primary-container": "#0f6cbd",
+                        "on-secondary-container": "#fefcff",
+                        "primary-fixed": "#d3e3ff",
+                        "surface-bright": "#f7f9fb",
+                        "error-container": "#ffdad6",
+                        "background": "#f7f9fb",
+                        "on-primary-container": "#e3ecff",
+                        "inverse-surface": "#2d3133",
+                        "surface-variant": "#e0e3e5",
+                        "surface": "#f7f9fb",
+                        "secondary": "#0058be",
+                        "outline": "#717783",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#612aca",
+                        "primary-fixed-dim": "#a3c9ff",
+                        "surface-container": "#eceef0",
+                        "primary": "#005396",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-tertiary-fixed": "#23005c",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "tertiary-container": "#7a49e4",
+                        "surface-dim": "#d8dadc"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .ghost-border {
+            outline: 1px solid rgba(193, 199, 211, 0.15);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #005396 0%, #0F6CBD 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+
+<!-- INJECTED NAVIGATION HUB -->
+<style>
+  .floating-nav-hub {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 12px 24px;
+    border-radius: 100px;
+    z-index: 999999;
+    display: flex;
+    gap: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    font-family: 'Inter', sans-serif;
+  }
+  .floating-nav-hub a {
+    text-decoration: none;
+    color: #0F172A;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+  .floating-nav-hub a:hover {
+    background: #0F6CBD;
+    color: white;
+  }
+</style>
+<div class="floating-nav-hub">
+  <a href="index.html">Dashboard</a>
+  <a href="monitor.html">Monitor</a>
+  <a href="detail.html">Bin Detail</a>
+  <a href="route.html">Route Optimizer</a>
+  <a href="analytics.html">Analytics</a>
+  <a href="alerts.html">Alerts</a>
+  <a href="complaints.html">Complaints Portal</a>
+</div>
+<!-- END INJECTED NAVIGATION HUB -->
+
+<!-- Sidebar Navigation (Hidden on Mobile) -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-[#F2F4F6]/80 backdrop-blur-xl flex flex-col h-full p-6 space-y-4 shadow-[24px_0_24px_rgba(25,28,30,0.06)] hidden md:flex">
+<div class="mb-8">
+<h1 class="text-xl font-black text-blue-900 font-headline">Civic Hub</h1>
+<p class="font-manrope text-xs font-semibold uppercase tracking-widest text-slate-500">City Operations</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-blue-600 transition-transform duration-300 hover:translate-x-1 font-manrope text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-blue-600 transition-transform duration-300 hover:translate-x-1 font-manrope text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+                Live Map
+            </a>
+<a class="flex items-center gap-3 p-3 bg-white/90 text-blue-700 rounded-lg shadow-sm font-bold font-manrope text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="crisis_alert">crisis_alert</span>
+                Alerts Center
+            </a>
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-blue-600 transition-transform duration-300 hover:translate-x-1 font-manrope text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+                Waste Logs
+            </a>
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-blue-600 transition-transform duration-300 hover:translate-x-1 font-manrope text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+                Analytics
+            </a>
+</nav>
+<div class="pt-6 border-t border-outline-variant/20 space-y-2">
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-blue-600 font-manrope text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                System Status
+            </a>
+<a class="flex items-center gap-3 p-3 text-slate-500 hover:text-blue-600 font-manrope text-xs font-semibold uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<div class="md:pl-64 flex flex-col min-h-screen">
+<!-- Top Navigation -->
+<header class="w-full sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm shadow-blue-900/5 flex justify-between items-center px-8 py-3 w-full">
+<div class="flex items-center gap-4">
+<span class="text-lg font-bold text-blue-900 font-headline">Smart Waste Management &gt; Alerts Center</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-2 bg-surface-container-low px-4 py-1.5 rounded-full ghost-border">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+<input class="bg-transparent border-none text-sm focus:ring-0 w-48 font-body" placeholder="Search bin ID or area..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-slate-500">
+<button class="hover:bg-slate-100/50 p-2 rounded-full transition-all active:scale-95"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<button class="hover:bg-slate-100/50 p-2 rounded-full transition-all active:scale-95"><span class="material-symbols-outlined" data-icon="settings">settings</span></button>
+<button class="hover:bg-slate-100/50 p-2 rounded-full transition-all active:scale-95"><span class="material-symbols-outlined" data-icon="help">help</span></button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-primary-container">
+<img alt="User Profile Avatar" data-alt="professional corporate headshot of a city official in a modern office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIICZgem_O3yId9efEy2P6aoVHE4vu2i8F2IzlmJ0ZP4uR3j5UAASX-Y1fAxhgNAANP4OcUR3k_qSX397i78RZv2Imt5XFMFa-x96faaGhkHWpV0VHc487CvJQA7rRp_qDl89KVmlgreqfpd70o9CeJkmgtoaMQ0p22qW7zgYQfaa23hq14HtqdUxacn5hr4I-bb3gF5WYS83thr3qb9Db0sAB9-WAtQhWi2aJqkqIjpTOH8C706dUiqzkXIF65IUb7MHR8mmFKFOe"/>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 p-8 space-y-8">
+<!-- Alert Summary Banner -->
+<section class="w-full bg-white/80 glass-effect p-4 rounded-xl ghost-border shadow-sm flex flex-wrap items-center justify-center gap-8">
+<div class="flex items-center gap-3 px-6 py-2 bg-error-container/20 rounded-full">
+<span class="w-3 h-3 rounded-full bg-error"></span>
+<span class="font-headline text-error font-bold tracking-tight">3 Critical Alerts</span>
+</div>
+<div class="flex items-center gap-3 px-6 py-2 bg-amber-100/40 rounded-full">
+<span class="w-3 h-3 rounded-full bg-amber-500"></span>
+<span class="font-headline text-amber-700 font-bold tracking-tight">8 Warnings</span>
+</div>
+<div class="flex items-center gap-3 px-6 py-2 bg-green-100/40 rounded-full">
+<span class="w-3 h-3 rounded-full bg-green-600"></span>
+<span class="font-headline text-green-700 font-bold tracking-tight">42 Resolved Today</span>
+</div>
+</section>
+<!-- Main Layout Split View -->
+<div class="flex flex-col lg:flex-row gap-8 items-start">
+<!-- Left Panel: Alert Feed (60%) -->
+<section class="w-full lg:w-[60%] space-y-4">
+<div class="flex items-center justify-between mb-2">
+<h2 class="text-2xl font-headline font-extrabold text-blue-900 tracking-tight">Active Alerts</h2>
+<span class="text-xs font-label uppercase tracking-widest text-outline">Real-time update active</span>
+</div>
+<!-- Alert Cards -->
+<div class="space-y-3">
+<!-- Critical Alert -->
+<div class="bg-surface-container-lowest glass-effect p-6 rounded-xl ghost-border shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-md transition-all border-l-4 border-error">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 bg-error text-white text-[10px] font-bold rounded uppercase tracking-tighter">Critical</span>
+<span class="font-headline font-bold text-on-surface">BIN-042</span>
+</div>
+<span class="text-xs text-outline font-medium">2 mins ago</span>
+</div>
+<p class="text-on-surface-variant font-body mb-4">Overflow Risk Detected: 95% full. Immediate collection required in Sector 7.</p>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">Plastic</span>
+<span class="px-3 py-1 bg-surface-container-low text-on-surface-variant rounded-full text-xs font-semibold">Industrial Zone</span>
+</div>
+</div>
+<!-- Warning Alert -->
+<div class="bg-surface-container-lowest p-6 rounded-xl ghost-border shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-md transition-all border-l-4 border-amber-500">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-bold rounded uppercase tracking-tighter">Warning</span>
+<span class="font-headline font-bold text-on-surface">BIN-109</span>
+</div>
+<span class="text-xs text-outline font-medium">14 mins ago</span>
+</div>
+<p class="text-on-surface-variant font-body mb-4">Battery Low: 8% remaining. Sensor data integrity may be compromised.</p>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Organic</span>
+<span class="px-3 py-1 bg-surface-container-low text-on-surface-variant rounded-full text-xs font-semibold">Residential</span>
+</div>
+</div>
+<!-- Warning Alert -->
+<div class="bg-surface-container-lowest p-6 rounded-xl ghost-border shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-md transition-all border-l-4 border-amber-500 opacity-80">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-bold rounded uppercase tracking-tighter">Warning</span>
+<span class="font-headline font-bold text-on-surface">BIN-088</span>
+</div>
+<span class="text-xs text-outline font-medium">45 mins ago</span>
+</div>
+<p class="text-on-surface-variant font-body mb-4">Potential Blockage: Unexpected fill rate change detected in chutes.</p>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Metal</span>
+<span class="px-3 py-1 bg-surface-container-low text-on-surface-variant rounded-full text-xs font-semibold">Market Square</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Alert Inspector (40%) -->
+<aside class="w-full lg:w-[40%] sticky top-24">
+<div class="bg-white/90 glass-effect rounded-2xl ghost-border shadow-xl p-8 space-y-8">
+<div>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xl font-headline font-extrabold text-blue-900">Alert Inspector</h3>
+<span class="material-symbols-outlined text-outline cursor-pointer" data-icon="close">close</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-4 flex items-center justify-between">
+<span class="text-sm font-semibold font-headline">BIN-042 Details</span>
+<span class="text-[10px] bg-primary-container text-white px-2 py-1 rounded-full uppercase tracking-widest">Active Focus</span>
+</div>
+</div>
+<!-- Snapshot Section -->
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-xl ghost-border text-center">
+<span class="material-symbols-outlined text-error mb-2" data-icon="battery_low">battery_low</span>
+<p class="text-[10px] font-label uppercase tracking-widest text-outline">Battery</p>
+<p class="text-lg font-bold font-headline text-error">8%</p>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl ghost-border text-center">
+<span class="material-symbols-outlined text-blue-600 mb-2" data-icon="auto_delete">auto_delete</span>
+<p class="text-[10px] font-label uppercase tracking-widest text-outline">Fill Level</p>
+<p class="text-lg font-bold font-headline text-blue-600">95%</p>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl ghost-border text-center">
+<span class="material-symbols-outlined text-amber-600 mb-2" data-icon="thermostat">thermostat</span>
+<p class="text-[10px] font-label uppercase tracking-widest text-outline">Temp</p>
+<p class="text-lg font-bold font-headline text-amber-600">32°C</p>
+</div>
+</div>
+<!-- Location Section -->
+<div>
+<p class="text-xs font-label uppercase tracking-widest text-outline mb-3">Location Context</p>
+<div class="h-40 w-full rounded-xl overflow-hidden ghost-border relative">
+<img alt="Map View" data-alt="a stylized minimalist map showing city streets with a bright red pulsating marker indicating a bin location" data-location="Mumbai, India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPxhzFla262FVNch6j8RhPN3WbnewQeL6oluvTyRfizdudU9RbbW5x4yfEnXOfVprJtWgW5PT4AbE_xaA7-BOMCGt6IH-efmoI37YAL-DS2GYhZSsvpHfV_yqjqEEOSyHR3tL_oN9xnCXZ2MHMlBfd9bIbK79Li20kuIfi1KvjFwpfXQY7MQlklSn3uNrhexpPifWAh-BoeSNYIvhkuj4PeIN343avFmXhhzJ_bMw82UgRQSBxl6-mtJnQgTD9A515RU1-mhdfch8s"/>
+<div class="absolute bottom-2 left-2 bg-white/90 glass-effect px-3 py-1 rounded-lg text-xs font-semibold shadow-sm">
+                                    Sector 7, Marine Drive
+                                </div>
+</div>
+</div>
+<!-- Suggested Action -->
+<div class="bg-primary-fixed/30 p-4 rounded-xl border-l-4 border-primary">
+<p class="text-[10px] font-label uppercase tracking-widest text-primary font-bold mb-1">Recommended Action</p>
+<p class="text-sm font-medium text-on-primary-fixed-variant">Reroute nearest truck: <span class="font-bold">TR-34</span> (4.2km away)</p>
+</div>
+<!-- Actions -->
+<div class="space-y-3 pt-4">
+<button class="w-full py-4 primary-gradient text-white rounded-lg font-headline font-bold shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98]">
+                                Dispatch Truck
+                            </button>
+<div class="flex gap-2">
+<button class="flex-1 py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-lg transition-all font-headline">
+                                    Acknowledge
+                                </button>
+<button class="flex-1 py-3 text-sm font-bold text-outline hover:text-error hover:bg-error/5 rounded-lg transition-all font-headline">
+                                    Mark False Alarm
+                                </button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</body></html>

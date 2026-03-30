@@ -1,0 +1,77 @@
+[
+    {
+        "bin_id": "BIN_02",
+        "waste_type": "paper",
+        "timestamp": "2026-03-24 10:27:28"
+    },
+    {
+        "bin_id": "BIN_02",
+        "waste_type": "paper",
+        "timestamp": "2026-03-24 10:33:53"
+    },
+    {
+        "bin_id": "BIN_02",
+        "waste_type": "paper",
+        "timestamp": "2026-03-24 10:37:22"
+    },
+    {
+        "bin_id": "BIN_02",
+        "waste_type": "paper",
+        "timestamp": "2026-03-24 14:18:22"
+    },
+    {
+        "bin_id": "BIN_02",
+        "waste_type": "paper",
+        "timestamp": "2026-03-25 14:15:49"
+    },
+    {
+        "bin_id": "BIN_03",
+        "waste_type": "metal",
+        "timestamp": "2026-03-25 14:17:54"
+    },
+    {
+        "bin_id": "BIN_02",
+        "waste_type": "paper",
+        "timestamp": "2026-03-25 14:19:54"
+    },
+    {
+        "bin_id": "BIN_03",
+        "waste_type": "metal",
+        "timestamp": "2026-03-25 15:56:02"
+    },
+    {
+        "bin_id": "BIN_04",
+        "waste_type": "organic",
+        "timestamp": "2026-03-25 15:56:55"
+    },
+    {
+        "bin_id": "BIN_04",
+        "waste_type": "organic",
+        "timestamp": "2026-03-25 15:58:54"
+    },
+    {
+        "bin_id": "BIN_04",
+        "waste_type": "organic",
+        "timestamp": "2026-03-25 16:00:14"
+    },
+    {
+        "bin_id": "BIN_01",
+        "waste_type": "plastic",
+        "timestamp": "2026-03-25 16:03:23"
+    },
+    {
+        "bin_id": "BIN_01",
+        "waste_type": "plastic",
+        "timestamp": "2026-03-25 16:10:17"
+    },
+    {
+        "bin_id": "BIN_02",
+        "waste_type": "paper",
+        "timestamp": "2026-03-25 16:11:43"
+    },
+    {
+        "bin_id": "BIN_03",
+        "waste_type": "metal",
+        "timestamp": "2026-03-25 16:12:20"
+    }
+]

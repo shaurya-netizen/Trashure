@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>BIN-001 Hardware Diagnostic | Trashure</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-dim": "#d8dadc",
+            "on-surface": "#191c1e",
+            "on-surface-variant": "#414751",
+            "surface-container-low": "#f2f4f6",
+            "primary": "#005396",
+            "on-secondary-fixed": "#001a42",
+            "secondary-container": "#2170e4",
+            "surface-variant": "#e0e3e5",
+            "tertiary-fixed-dim": "#d0bcff",
+            "on-secondary-fixed-variant": "#004395",
+            "tertiary-container": "#7a49e4",
+            "surface-tint": "#0060ab",
+            "surface-bright": "#f7f9fb",
+            "error": "#ba1a1a",
+            "surface-container-high": "#e6e8ea",
+            "surface": "#f7f9fb",
+            "primary-fixed": "#d3e3ff",
+            "tertiary": "#612aca",
+            "on-tertiary-fixed-variant": "#5516be",
+            "surface-container": "#eceef0",
+            "tertiary-fixed": "#e9ddff",
+            "inverse-on-surface": "#eff1f3",
+            "secondary-fixed": "#d8e2ff",
+            "on-tertiary-fixed": "#23005c",
+            "primary-fixed-dim": "#a3c9ff",
+            "primary-container": "#0f6cbd",
+            "error-container": "#ffdad6",
+            "on-primary-container": "#e3ecff",
+            "surface-container-highest": "#e0e3e5",
+            "surface-container-lowest": "#ffffff",
+            "outline": "#717783",
+            "on-error-container": "#93000a",
+            "on-background": "#191c1e",
+            "inverse-primary": "#a3c9ff",
+            "inverse-surface": "#2d3133",
+            "on-error": "#ffffff",
+            "background": "#f7f9fb",
+            "on-tertiary-container": "#f2e8ff",
+            "secondary-fixed-dim": "#adc6ff",
+            "secondary": "#0058be",
+            "on-primary": "#ffffff",
+            "outline-variant": "#c1c7d3",
+            "on-secondary": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "on-secondary-container": "#fefcff",
+            "on-primary-fixed": "#001c39",
+            "on-primary-fixed-variant": "#004883"
+          },
+          fontFamily: {
+            "headline": ["Manrope", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"]
+          },
+          borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .tonal-shift {
+      background: linear-gradient(135deg, #f7f9fb 0%, #eceef0 100%);
+    }
+
+    .primary-gradient {
+      background: linear-gradient(135deg, #005396 0%, #0f6cbd 100%);
+    }
+
+    .fill-gauge-gradient {
+      background: linear-gradient(to top, #ba1a1a 0%, #ef4444 100%);
+    }
+  </style>
+</head>
+
+<body class="bg-surface font-body text-on-surface min-h-screen">
+
+  <!-- TopNavBar (Shared Component) -->
+  <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm px-8 h-16 flex justify-between items-center">
+    <div class="flex items-center gap-6">
+        <span class="text-xl font-bold tracking-tight text-blue-900 font-headline">Trashure</span>
+        <nav class="hidden md:flex gap-8 items-center border-l border-slate-200 pl-8">
+            <a class="text-slate-600 hover:text-blue-900 text-xs font-bold uppercase tracking-widest transition-all" href="index.html">Dashboard</a>
+            <a class="text-slate-600 hover:text-blue-900 text-xs font-bold uppercase tracking-widest transition-all" href="monitor.html">Waste Map</a>
+            <a class="text-slate-600 hover:text-blue-900 text-xs font-bold uppercase tracking-widest transition-all" href="route.html">Route Optimizer</a>
+            <a class="text-blue-900 text-xs font-bold uppercase tracking-widest transition-all border-b-2 border-blue-900" href="detail.html">Hardware</a>
+        </nav>
+    </div>
+    <div class="flex items-center gap-4">
+        <span class="material-symbols-outlined text-slate-400">notifications</span>
+        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+            <span class="material-symbols-outlined text-blue-600 text-lg">account_circle</span>
+        </div>
+    </div>
+  </header>
+
+  <!-- SideNavBar (Shared Component) -->
+  <aside class="fixed left-0 top-0 h-full w-64 z-40 bg-slate-50/80 backdrop-blur-xl shadow-2xl shadow-blue-900/10 flex flex-col p-4 gap-2 pt-20 transition-all">
+    <div class="px-4 mb-6">
+        <h2 class="font-bold text-blue-900 font-headline text-lg">Trashure</h2>
+        <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Admin Control</p>
+    </div>
+    <nav class="flex flex-col gap-1">
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-blue-600 hover:bg-white/50 rounded-lg transition-all" href="index.html">
+            <span class="material-symbols-outlined text-xl">dashboard</span>
+            <span class="font-manrope text-sm font-semibold">Dashboard</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-blue-600 hover:bg-white/50 rounded-lg transition-all" href="monitor.html">
+            <span class="material-symbols-outlined text-xl">map</span>
+            <span class="font-manrope text-sm font-semibold">Waste Map</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-blue-600 hover:bg-white/50 rounded-lg transition-all" href="route.html">
+            <span class="material-symbols-outlined text-xl">directions_car</span>
+            <span class="font-manrope text-sm font-semibold">Route Optimizer</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 bg-white text-blue-700 font-bold shadow-sm rounded-lg transition-all" href="detail.html">
+            <span class="material-symbols-outlined text-xl">analytics</span>
+            <span class="font-manrope text-sm font-semibold">Hardware Diagnostic</span>
+        </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content Canvas -->
+  <main class="lg:pl-64 pt-20 pb-12 px-8 min-h-screen transition-all">
+
+    <!-- Breadcrumbs & Actions -->
+    <div class="flex justify-between items-center mb-10">
+      <div class="flex flex-col gap-1">
+        <nav class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-outline">
+          <span>Trashure</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span>Hardware Diagnostic</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary">BIN-001</span>
+        </nav>
+        <h1 class="text-4xl font-headline font-extrabold tracking-tight text-on-surface">BIN-001 <span
+            class="text-lg font-medium text-outline ml-2">ESP32 · HC-SR04 · MPU6050</span></h1>
+      </div>
+      <a href="monitor.html"
+        class="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-all duration-200 group">
+        <span
+          class="material-symbols-outlined text-on-surface group-hover:-translate-x-1 transition-transform">arrow_back</span>
+        <span class="font-manrope text-sm font-bold">Back to Monitor</span>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-10 gap-8">
+
+      <!-- Left Column: Vertical fill gauge + sensor mini-cards -->
+      <div class="md:col-span-4 flex flex-col gap-6">
+
+        <!-- Fill gauge card -->
+        <div
+          class="bg-surface-container-lowest glass-card rounded-xl p-8 border border-white/20 shadow-sm relative overflow-hidden h-[420px] flex flex-col">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <p class="text-[10px] uppercase font-bold tracking-[0.2em] text-outline mb-1">Fill Level</p>
+              <h2 id="fill-pct" class="text-6xl font-headline font-extrabold text-primary">—</h2>
+            </div>
+            <div class="flex flex-col items-end gap-2">
+              <span id="online-badge"
+                class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                Online
+              </span>
+              <span id="lid-badge"
+                class="px-3 py-1 rounded-full bg-surface-container text-outline text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
+                <span class="material-symbols-outlined text-[12px]">sensors</span>
+                Lid: —
+              </span>
+            </div>
+          </div>
+          <!-- Vertical gauge -->
+          <div class="flex-grow flex justify-center items-end pb-2">
+            <div
+              class="relative w-28 h-full bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/10">
+              <div id="gauge-fill"
+                class="absolute bottom-0 left-0 w-full fill-gauge-gradient transition-all duration-700"
+                style="height:0%">
+                <div class="absolute top-0 left-0 w-full h-8 bg-white/20 blur-sm"></div>
+              </div>
+              <!-- tick marks -->
+              <div class="absolute inset-0 flex flex-col justify-between py-5 px-2 pointer-events-none opacity-25">
+                <div class="w-full h-[1px] bg-outline"></div>
+                <div class="w-1/2 h-[1px] bg-outline ml-auto"></div>
+                <div class="w-full h-[1px] bg-outline"></div>
+                <div class="w-1/2 h-[1px] bg-outline ml-auto"></div>
+                <div class="w-full h-[1px] bg-outline"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Three sensor mini-cards -->
+        <div class="grid grid-cols-1 gap-4">
+
+          <!-- Fill Level % -->
+          <div
+            class="bg-surface-container-lowest glass-card rounded-xl p-5 border border-white/20 shadow-sm flex items-center gap-5">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-primary text-2xl"
+                style="font-variation-settings:'FILL' 1">water_full</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-[10px] font-bold text-outline uppercase tracking-widest">Fill Level</p>
+              <p id="card-fill" class="text-2xl font-headline font-extrabold text-on-surface mt-0.5">— %</p>
+            </div>
+            <span class="text-[10px] font-bold text-outline">HC-SR04</span>
+          </div>
+
+          <!-- Sensor Distance -->
+          <div
+            class="bg-surface-container-lowest glass-card rounded-xl p-5 border border-white/20 shadow-sm flex items-center gap-5">
+            <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[#7a49e4] text-2xl"
+                style="font-variation-settings:'FILL' 1">straighten</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-[10px] font-bold text-outline uppercase tracking-widest">Sensor Distance</p>
+              <p id="card-dist" class="text-2xl font-headline font-extrabold text-on-surface mt-0.5">— cm</p>
+            </div>
+            <span class="text-[10px] font-bold text-outline">HC-SR04</span>
+          </div>
+
+          <!-- Lid Status -->
+          <div
+            class="bg-surface-container-lowest glass-card rounded-xl p-5 border border-white/20 shadow-sm flex items-center gap-5">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-amber-600 text-2xl"
+                style="font-variation-settings:'FILL' 1">sensors</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-[10px] font-bold text-outline uppercase tracking-widest">Lid Status</p>
+              <div id="card-lid" class="mt-1">
+                <span class="text-sm font-bold text-outline">Waiting for data…</span>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold text-outline">MPU6050</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Column: Chart + location -->
+      <div class="md:col-span-6 flex flex-col gap-6">
+
+        <!-- Fill Level History chart -->
+        <div
+          class="bg-surface-container-lowest glass-card rounded-xl p-8 border border-white/20 shadow-sm flex flex-col">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-headline font-bold text-lg">Fill Level History</h3>
+            <span class="text-[10px] font-bold px-2 py-1 bg-blue-50 text-primary rounded-md">Live · last 20
+              readings</span>
+          </div>
+          <div class="relative h-64">
+            <canvas id="fill-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- ESP32 hardware info grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-2">
+            <span class="material-symbols-outlined text-primary">developer_board</span>
+            <div>
+              <p class="text-[10px] font-bold text-outline uppercase">MCU</p>
+              <p class="text-base font-bold">ESP32</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-2">
+            <span class="material-symbols-outlined text-primary">wifi</span>
+            <div>
+              <p class="text-[10px] font-bold text-outline uppercase">Protocol</p>
+              <p class="text-base font-bold">Wi-Fi HTTP</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-2">
+            <span class="material-symbols-outlined text-primary">straighten</span>
+            <div>
+              <p class="text-[10px] font-bold text-outline uppercase">Ultrasonic</p>
+              <p class="text-base font-bold">HC-SR04</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-2">
+            <span class="material-symbols-outlined text-primary">motion_sensor_active</span>
+            <div>
+              <p class="text-[10px] font-bold text-outline uppercase">IMU</p>
+              <p class="text-base font-bold">MPU6050</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location card -->
+        <div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-white/20 shadow-sm">
+          <div class="p-5 flex justify-between items-center">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[10px] font-bold text-outline uppercase tracking-wider">Bin Location</span>
+              <span class="text-sm font-semibold">28.5355° N, 77.3910° E — Noida, UP</span>
+            </div>
+            <a href="route.html"
+              class="text-primary hover:text-blue-800 transition-colors flex items-center gap-1 text-xs font-bold">
+              View on map
+              <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // ── Chart.js setup ────────────────────────────────────────────────────────
+    const MAX_POINTS = 20;
+    const fillHistory = { labels: [], data: [] };
+
+    const ctx = document.getElementById('fill-chart').getContext('2d');
+    const fillChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: fillHistory.labels,
+        datasets: [{
+          label: 'Fill Level (%)',
+          data: fillHistory.data,
+          borderColor: '#005396',
+          backgroundColor: 'rgba(0,83,150,0.08)',
+          borderWidth: 2.5,
+          pointRadius: 3,
+          pointBackgroundColor: '#005396',
+          tension: 0.4,
+          fill: true,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            min: 0, max: 100,
+            ticks: { callback: v => v + '%', font: { size: 11 } },
+            grid: { color: 'rgba(0,0,0,0.04)' },
+          },
+          x: {
+            ticks: { font: { size: 10 }, maxTicksLimit: 8 },
+            grid: { display: false },
+          },
+        },
+        plugins: { legend: { display: false } },
+      },
+    });
+
+    // ── Gauge fill color helper ──────────────────────────────────────────────
+    function gaugeColor(pct) {
+      if (pct >= 85) return 'linear-gradient(to top,#ba1a1a,#ef4444)';
+      if (pct >= 50) return 'linear-gradient(to top,#b45309,#F59E0B)';
+      return 'linear-gradient(to top,#15803d,#22c55e)';
+    }
+
+    // ── DOM References ───────────────────────────────────────────────────────
+    const fillPctEl = document.getElementById('fill-pct');
+    const cardFill = document.getElementById('card-fill');
+    const cardDist = document.getElementById('card-dist');
+    const cardLid = document.getElementById('card-lid');
+    const lidBadge = document.getElementById('lid-badge');
+    const gaugeFill = document.getElementById('gauge-fill');
+    const onlineBadge = document.getElementById('online-badge');
+
+    // ── MAIN SYNC FUNCTION — targets BIN_001 ─────────────────────────────────
+    async function updateDashboard() {
+      try {
+        const res = await fetch('/bins');
+        const data = await res.json();
+
+        const bin = data['BIN_001'];
+
+        if (!bin) {
+          console.warn("BIN_001 not found in server data.");
+          return;
+        }
+
+        const fill = Math.round(bin.fill ?? 0);
+        const dist = Math.round(bin.distance_cm ?? 0);
+        const lidMoving = bin.lid_moving ?? false;
+
+        // 1. Update Big Number & Visual Gauge
+        fillPctEl.textContent = fill + '%';
+        fillPctEl.className = `text-6xl font-headline font-extrabold ${fill >= 85 ? 'text-error' : fill >= 50 ? 'text-amber-600' : 'text-primary'}`;
+        gaugeFill.style.height = fill + '%';
+        gaugeFill.style.background = gaugeColor(fill);
+
+        // 2. Update Mini Info Cards
+        cardFill.textContent = fill + ' %';
+        cardDist.textContent = dist + ' cm';
+
+        // 3. Update Lid Motion UI
+        if (lidMoving) {
+          cardLid.innerHTML = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold uppercase"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>MOVING</span>`;
+          lidBadge.className = 'px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1';
+          lidBadge.innerHTML = '<span class="material-symbols-outlined text-[12px]">sensors</span> Lid: MOVING';
+        } else {
+          cardLid.innerHTML = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold uppercase"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>STABLE</span>`;
+          lidBadge.className = 'px-3 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1';
+          lidBadge.innerHTML = '<span class="material-symbols-outlined text-[12px]">sensors</span> Lid: STABLE';
+        }
+
+        // 4. Update Status Badge
+        onlineBadge.className = 'px-3 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1';
+        onlineBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>Online';
+
+        // 5. Update Chart History
+        const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        fillHistory.labels.push(now);
+        fillHistory.data.push(fill);
+        if (fillHistory.labels.length > MAX_POINTS) {
+          fillHistory.labels.shift();
+          fillHistory.data.shift();
+        }
+        fillChart.update('none');
+
+        console.log("Hardware Sync Success:", bin);
+
+      } catch (err) {
+        console.error("Dashboard Sync Failed:", err);
+        onlineBadge.className = 'px-3 py-1 rounded-full bg-error/10 text-error text-[10px] font-bold uppercase tracking-widest flex items-center gap-1';
+        onlineBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>Offline';
+      }
+    }
+
+    // Refresh every 1 second
+    updateDashboard();
+    setInterval(updateDashboard, 1000);
+  </script>
+</body>
+
+</html>
