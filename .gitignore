@@ -1,0 +1,15 @@
+# Python & Virtual Env
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Proxy & Private Info (Antigravity)
+config.json
+session_keys.txt
+.env
+
+# System
+.DS_Store
+Thumbs.db
+
