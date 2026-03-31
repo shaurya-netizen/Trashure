@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trashure — Login</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Login page layout ── */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #eef0f3;
+      font-family: 'Noto Sans', Arial, sans-serif;
+    }
+
+    .login-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.11);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .login-card-header {
+      background: #1a3a5c;
+      padding: 28px 32px 22px;
+      text-align: center;
+    }
+
+    /* BRANDING */
+    .brand-logo {
+      width: 230px;
+      max-width: 90%;
+      height: auto;
+      object-fit: contain;
+      margin-bottom: 14px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+    }
+
+    .login-card-header h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 4px;
+      letter-spacing: 0.2px;
+    }
+
+    .login-card-header p {
+      font-size: 11.5px;
+      color: #8eb4d6;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Card body */
+    .login-card-body {
+      padding: 28px 32px 32px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a3a5c;
+      margin-bottom: 5px;
+      letter-spacing: 0.3px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid #c8cdd6;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-family: inherit;
+      color: #222;
+      background: #f8fafc;
+      margin-bottom: 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus {
+      border-color: #1a3a5c;
+      box-shadow: 0 0 0 3px rgba(26,58,92,0.1);
+      background: #ffffff;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 11px;
+      background: #1a3a5c;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 4px;
+    }
+
+    .login-btn:hover  { background: #0f2540; }
+    .login-btn:active { transform: scale(0.99); }
+
+    .error-msg {
+      color: #c0392b;
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 10px;
+      min-height: 18px;
+      text-align: center;
+    }
+
+    .demo-hint {
+      margin-top: 20px;
+      padding: 10px 14px;
+      background: #eef3f8;
+      border-left: 3px solid #1a3a5c;
+      border-radius: 6px;
+      font-size: 11.5px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .demo-hint strong { color: #1a3a5c; }
+
+    .login-footer {
+      text-align: center;
+      padding: 14px 16px;
+      font-size: 11px;
+      color: #999;
+      border-top: 1px solid #e2e6ea;
+    }
+
+    .gov-strip {
+      background: #0a1e33;
+      color: #8eb4d6;
+      font-size: 11px;
+      padding: 5px 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    @media (max-width: 500px) {
+      .login-card {
+        max-width: 100%;
+      }
+
+      .brand-logo {
+        width: 190px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GOV TOP STRIP -->
+  <div class="gov-strip">
+    <span>Government of India &nbsp;|&nbsp; Ministry of Housing &amp; Urban Affairs &nbsp;|&nbsp; Smart Cities Mission</span>
+    <span>Helpdesk: smartwaste@gov.in &nbsp;|&nbsp; Toll Free: 1800-XXX-XXXX</span>
+  </div>
+
+  <main class="login-main">
+    <div class="login-card">
+
+      <!-- Header -->
+      <div class="login-card-header">
+        <img src="assets/logo.png" alt="Trashure Logo" class="brand-logo" />
+        <h1>Smart Waste Intelligence Platform</h1>
+        <p>Urban Local Body &nbsp;·&nbsp; Department of Sanitation &amp; Solid Waste Management</p>
+      </div>
+
+      <!-- Form -->
+      <div class="login-card-body">
+        <label class="form-label" for="email">Email Address</label>
+        <input
+          class="form-input"
+          type="email"
+          id="email"
+          placeholder="admin@trashure.com"
+          autocomplete="email"
+          onkeydown="if(event.key==='Enter') document.getElementById('password').focus()"
+        />
+
+        <label class="form-label" for="password">Password</label>
+        <input
+          class="form-input"
+          type="password"
+          id="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          onkeydown="if(event.key==='Enter') login()"
+        />
+
+        <button class="login-btn" onclick="login()">Sign In to Dashboard</button>
+
+        <div class="error-msg" id="error"></div>
+
+        <div class="demo-hint">
+          <strong>Demo credentials</strong><br>
+          Email: admin@trashure.com<br>
+          Password: admin123
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="login-footer">
+    Trashure &nbsp;|&nbsp; Smart Cities Mission, Govt. of India &nbsp;|&nbsp; v2.1
+  </footer>
+
+<script src="auth.js"></script>
+</body>
+</html>
