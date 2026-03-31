@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trashure — Smart Waste Intelligence Platform</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="auth.js"></script>
+</head>
+<body>
+  <script>
+    checkAuth();
+  </script>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- GOV TOP STRIP -->
+  <div class="gov-strip">
+    <span>Government of India &nbsp;|&nbsp; Ministry of Housing &amp; Urban Affairs &nbsp;|&nbsp; Smart Cities Mission</span>
+    <span>Helpdesk: support@smartcities.gov.in &nbsp;|&nbsp; Toll Free: 1800-XXX-XXXX</span>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">
+      <img src="assets/logo.png" alt="Trashure Logo" class="header-logo" />
+      <div class="header-text-block">
+        <div class="header-title">Smart Waste Intelligence Platform</div>
+        <div class="header-subtitle">Urban Local Body · Department of Sanitation &amp; Solid Waste Management</div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <button onclick="logout()" style="
+        padding:6px 12px;
+        background:#c0392b;
+        color:white;
+        border:none;
+        border-radius:6px;
+        cursor:pointer;
+      ">Logout</button>
+    </div>
+
+    <div class="header-clock">
+      <div class="clock-time" id="clock-time">--:--:--</div>
+      <div class="clock-date" id="clock-date">-- --- ----</div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="nav-tabs">
+    <div class="nav-tab active" data-tab="overview">Overview</div>
+    <div class="nav-tab" data-tab="bin-status">Bin Status</div>
+    <div class="nav-tab" data-tab="analysis">Waste Type Analysis</div>
+    <div class="nav-tab" data-tab="log">Collection Log</div>
+    <div class="nav-tab" data-tab="reports">Reports</div>
+    <div class="nav-tab" data-tab="settings">Settings</div>
+  </nav>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <span class="status-bar-text" id="status-bar-text">Loading…</span>
+    <span style="margin-left:auto; color:#aaa; font-size:11px;">
+      Last refresh: <strong id="last-refresh">--:--</strong>
+      &nbsp;|&nbsp; Auto-refresh: <strong id="refresh-label">30s</strong>
+    </span>
+  </div>
+
+  <main class="page">
+
+    <!-- ══════════════════════════════════════════
+         TAB 1 — OVERVIEW
+    ══════════════════════════════════════════ -->
+    <div class="tab-panel active" id="tab-overview">
+
+      <div class="section-heading">Key Metrics — Today</div>
+      <div class="overview-grid">
+        <div class="ov-card blue">
+          <div class="ov-label">Total Waste Entries Today</div>
+          <div class="ov-value" id="ov-entries">—</div>
+          <div class="ov-sub" id="ov-entries-sub">Loading…</div>
+          <span class="ov-badge badge-green">Live Data</span>
+        </div>
+        <div class="ov-card green">
+          <div class="ov-label">Most Common Waste Type</div>
+          <div class="ov-value" id="ov-common" style="font-size:22px;">—</div>
+          <div class="ov-sub" id="ov-common-sub">Loading…</div>
+          <span class="ov-badge badge-amber">Recyclable</span>
+        </div>
+        <div class="ov-card amber">
+          <div class="ov-label">Active Bins</div>
+          <div class="ov-value" id="ov-active">—</div>
+          <div class="ov-sub" id="ov-active-sub">Loading…</div>
+          <span class="ov-badge badge-amber" id="ov-offline-badge">—</span>
+        </div>
+        <div class="ov-card red">
+          <div class="ov-label">Active Alerts</div>
+          <div class="ov-value" id="ov-alerts">—</div>
+          <div class="ov-sub" id="ov-alerts-sub">Loading…</div>
+          <span class="ov-badge badge-red">Requires Collection</span>
+        </div>
+      </div>
+
+      <div class="mid-row">
+        <div class="panel">
+          <div class="panel-title">Waste Type Distribution — Today</div>
+          <div class="dist-layout">
+            <div class="dist-chart-wrap"><canvas id="pieChart"></canvas></div>
+            <div class="dist-legend" id="pie-legend"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Live Waste Trends</div>
+          <div class="chart-controls">
+            <button class="chart-btn active">Live</button>
+          </div>
+          <div class="trends-chart-wrap"><canvas id="lineChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="section-heading">Bin Usage Summary</div>
+      <div class="bin-table-wrap">
+        <div class="table-toolbar">
+          <input class="table-search" id="table-search" type="text" placeholder="Search bin ID, location, type…" />
+          <select class="filter-select" id="filter-status">
+            <option value="">All Statuses</option>
+            <option>Full</option>
+            <option>Filling</option>
+            <option>Normal</option>
+            <option>Offline</option>
+          </select>
+          <select class="filter-select" id="filter-type">
+            <option value="">All Waste Types</option>
+            <option>Plastic</option>
+            <option>Organic</option>
+            <option>Paper</option>
+            <option>Metal</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="sortable" data-col="id">Bin ID <span class="sort-indicator"></span></th>
+              <th class="sortable" data-col="loc">Location <span class="sort-indicator"></span></th>
+              <th class="sortable" data-col="entries">Total Entries <span class="sort-indicator"></span></th>
+              <th class="sortable" data-col="type">Dominant Waste <span class="sort-indicator"></span></th>
+              <th class="sortable" data-col="fill">Fill Level <span class="sort-indicator"></span></th>
+              <th>Last Entry</th>
+              <th class="sortable" data-col="status">Status <span class="sort-indicator"></span></th>
+            </tr>
+          </thead>
+          <tbody id="bin-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="section-heading">System Insights</div>
+      <div class="insights-grid" id="insights-container"></div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         TAB 2 — BIN STATUS
+    ══════════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-bin-status">
+      <div class="section-heading">Live Bin Status</div>
+
+      <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+        <button class="chart-btn active" id="simulate-btn">⚡ Simulate New Waste</button>
+        <button class="chart-btn" id="reset-btn">🔄 Reset Demo Data</button>
+      </div>
+
+      <div class="bin-grid" id="bin-grid"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         TAB 3 — WASTE TYPE ANALYSIS
+    ══════════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-analysis">
+      <div class="section-heading">Waste Type Breakdown</div>
+      <div class="analysis-row">
+        <div class="panel">
+          <div class="panel-title">Share by Waste Type — Today</div>
+          <div class="bar-chart-wrap" id="analysis-bar-chart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Distribution Chart</div>
+          <div class="dist-layout">
+            <div class="dist-chart-wrap" style="width:160px;height:160px;"><canvas id="pieChart2"></canvas></div>
+            <div class="dist-legend" id="pie2-legend"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         TAB 4 — COLLECTION LOG
+    ══════════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-log">
+      <div class="section-heading">Today's Collection Log</div>
+
+      <div class="log-filters">
+        <button class="chart-btn log-filter-btn active" data-type="ALL">All</button>
+        <button class="chart-btn log-filter-btn" data-type="Plastic">Plastic</button>
+        <button class="chart-btn log-filter-btn" data-type="Organic">Organic</button>
+        <button class="chart-btn log-filter-btn" data-type="Paper">Paper</button>
+        <button class="chart-btn log-filter-btn" data-type="Metal">Metal</button>
+        <button class="chart-btn log-filter-btn" data-type="Other">Other</button>
+      </div>
+
+      <div class="log-entry" style="font-weight:700; background:#eef3f8; border-bottom:2px solid #d9e4ef;">
+        <span>Timestamp</span>
+        <span>Bin ID</span>
+        <span>Waste Type</span>
+        <span>Fill Level</span>
+        <span>Image</span>
+      </div>
+
+      <div id="log-list"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         TAB 5 — REPORTS
+    ══════════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-reports">
+      <div class="section-heading">Generate Reports</div>
+      <div class="report-grid">
+        <div class="report-card">
+          <div class="report-icon">📊</div>
+          <div class="report-title">Daily Summary Report</div>
+          <div class="report-desc">All bin entries, fill levels, and collection activity for today.</div>
+          <button class="report-btn" data-report="Daily_Summary">Download</button>
+        </div>
+        <div class="report-card">
+          <div class="report-icon">📈</div>
+          <div class="report-title">Weekly Trend Report</div>
+          <div class="report-desc">7-day waste generation trends broken down by type and location.</div>
+          <button class="report-btn" data-report="Weekly_Trend">Download</button>
+        </div>
+        <div class="report-card">
+          <div class="report-icon">🗑️</div>
+          <div class="report-title">Bin Utilisation Report</div>
+          <div class="report-desc">Per-bin fill history, overflow incidents, and collection frequency.</div>
+          <button class="report-btn" data-report="Bin_Utilisation">Download</button>
+        </div>
+        <div class="report-card">
+          <div class="report-icon">♻️</div>
+          <div class="report-title">Recyclables Report</div>
+          <div class="report-desc">Plastic, paper, and metal waste volumes available for recycling this week.</div>
+          <button class="report-btn" data-report="Recyclables">Download</button>
+        </div>
+        <div class="report-card">
+          <div class="report-icon">🚨</div>
+          <div class="report-title">Alert History</div>
+          <div class="report-desc">Full log of all overflow alerts and response times in the past 30 days.</div>
+          <button class="report-btn" data-report="Alert_History">Download</button>
+        </div>
+        <div class="report-card">
+          <div class="report-icon">📋</div>
+          <div class="report-title">Monthly Municipal Report</div>
+          <div class="report-desc">Comprehensive report for submission to Urban Local Body administration.</div>
+          <button class="report-btn" data-report="Monthly_Municipal">Download</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         TAB 6 — SETTINGS
+    ══════════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-settings">
+      <div class="section-heading">System Settings</div>
+
+      <div class="settings-section">
+        <div class="settings-title">Notifications</div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Overflow Alerts</div>
+            <div class="setting-desc">Notify when a bin exceeds threshold capacity</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="notif-overflow" checked /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Offline Bin Alerts</div>
+            <div class="setting-desc">Notify when a sensor goes offline</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="notif-offline" checked /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Daily Summary Email</div>
+            <div class="setting-desc">Send end-of-day report to registered email</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="notif-email" /><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-title">Data &amp; Display</div>
+        <div class="setting-row">
+          <div class="setting-label">Auto-Refresh Interval</div>
+          <select id="refresh-interval" class="setting-select">
+            <option value="10">10 seconds</option>
+            <option value="30" selected>30 seconds</option>
+            <option value="60">1 minute</option>
+            <option value="300">5 minutes</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">Overflow Threshold (%)</div>
+          <select id="overflow-threshold" class="setting-select">
+            <option value="75">75%</option>
+            <option value="85" selected>85%</option>
+            <option value="90">90%</option>
+            <option value="95">95%</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Dark Mode</div>
+            <div class="setting-desc">Switch to dark theme</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="dark-mode-toggle" /><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+
+      <button class="save-btn" id="settings-save">Save Settings</button>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    Trashure &nbsp;|&nbsp; Municipal Corporation &nbsp;|&nbsp; Smart Cities Mission, Govt. of India &nbsp;|&nbsp;
+    Technical Support: <strong style="color:#aac4dd;">support@smartcities.gov.in</strong>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

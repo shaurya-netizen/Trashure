@@ -13,3 +13,21 @@ session_keys.txt
 .DS_Store
 Thumbs.db
 
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+node_modules/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# ML / heavy files
+*.pt
+
+# runtime
+uploads/
+captures/

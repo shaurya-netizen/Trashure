@@ -1,0 +1,47 @@
+{
+  "bins": [
+    {
+      "id": "BIN-02",
+      "location": "Unknown Location",
+      "entries": 2,
+      "waste": "Metal",
+      "fill": 37,
+      "last": "12:00 PM",
+      "status": "Normal",
+      "imageUrl": "/uploads/BIN-02_20260328_120008_BIN-01_20260328_005238_capture.jpg"
+    },
+    {
+      "id": "BIN-03",
+      "location": "Unknown Location",
+      "entries": 1,
+      "waste": "Plastic",
+      "fill": 68,
+      "last": "11:59 AM",
+      "status": "Filling",
+      "imageUrl": "/uploads/BIN-03_20260328_115945_BIN-01_20260328_003807_capture.jpg"
+    }
+  ],
+  "logs": [
+    {
+      "binId": "BIN-02",
+      "wasteType": "Metal",
+      "fillLevel": 35,
+      "imageUrl": "/uploads/BIN-02_20260328_115901_BIN-01_20260328_003830_capture.jpg",
+      "timestamp": "28/03/2026, 11:59:14 AM"
+    },
+    {
+      "binId": "BIN-03",
+      "wasteType": "Plastic",
+      "fillLevel": 68,
+      "imageUrl": "/uploads/BIN-03_20260328_115945_BIN-01_20260328_003807_capture.jpg",
+      "timestamp": "28/03/2026, 11:59:45 AM"
+    },
+    {
+      "binId": "BIN-02",
+      "wasteType": "Metal",
+      "fillLevel": 37,
+      "imageUrl": "/uploads/BIN-02_20260328_120008_BIN-01_20260328_005238_capture.jpg",
+      "timestamp": "28/03/2026, 12:00:08 PM"
+    }
+  ]
+}
